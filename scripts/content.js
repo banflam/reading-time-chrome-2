@@ -26,3 +26,17 @@ function renderReadingTime(article) {
 }
 
 renderReadingTime(document.querySelector("article"));
+
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    for (const node of mutation.addedNodes) {
+      if (node instanceof Element && node.tagName === "ARTICLE") {
+        renderReadingTime(node);
+      }
+    }
+  }
+});
+
+observer.observe(document.querySelector("devsite-content"), {
+  childList: true,
+});
